@@ -659,6 +659,17 @@ pre code {
   padding-left: 15px;
 }
 
+.new-add {
+  display: flex;
+  justify-content: center;   /* Center horizontally */
+  align-items: center;       /* Center vertically */
+  margin: 0 auto;            /* Center the entire grid container */
+  position: relative;
+  width: 100%;
+  padding-right: 40px;
+  padding-left: 40px;
+}
+
 .col {
   flex-basis: 0;
   flex-grow: 1;
