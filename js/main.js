@@ -99,6 +99,13 @@
         }
         button.parent().parent().find('input').val(newVal);
     });
+
+    document.querySelectorAll('.btn-primary').forEach(button => {
+        button.addEventListener('click', function() {
+            this.closest('tr').remove();
+        });
+    });
     
 })(jQuery);
+
 
