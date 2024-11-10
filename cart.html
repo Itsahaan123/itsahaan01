@@ -125,6 +125,8 @@
                             <th>Products</th>
                             <th>Price</th>
                             <th>Quantity</th>
+                            <th>Colour</th>
+                            <th>Size</th>
                             <th>Total</th>
                             <th>Remove</th>
                         </tr>
@@ -255,7 +257,9 @@
             const row = document.createElement('tr');
 
             row.innerHTML = `
-                <td class="align-middle"><img src="img/product-1.jpg" alt="" style="width: 50px;"> ${item.name}</td>
+                <td class="align-middle">
+                    <img src="img/product-1.jpg" alt="" style="width: 50px;"> ${item.name}<br>
+                </td>
                 <td class="align-middle">$${item.price}</td>
                 <td class="align-middle">
                     <div class="input-group quantity mx-auto" style="width: 100px;">
@@ -272,6 +276,8 @@
                         </div>
                     </div>
                 </td>
+                <td class="align-middle">${item.color}</td>
+                <td class="align-middle">${item.size}</td>
                 <td class="align-middle">$${(item.price * item.quantity).toFixed(2)}</td>
                 <td class="align-middle"><button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})"><i class="fa fa-times"></i></button></td>
             `;
@@ -284,6 +290,7 @@
         // Update the total price displayed on the page
         document.getElementById('cartTotal').textContent = `Total: $${total.toFixed(2)}`;
     }
+
 
     // Function to update quantity of a product in the cart
     function updateQuantity(index, change) {
