@@ -43,7 +43,7 @@
                     <i class="fas fa-heart text-primary"></i>
                     <span class="badge">0</span>
                 </a>
-                <a href="" class="btn border">
+                <a href="cart.html" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
                     <span id="cart-count" class="badge">0</span>
                 </a>
@@ -152,19 +152,19 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-3 pt-1">
                             <h6 class="font-weight-medium">Subtotal</h6>
-                            <h6 class="font-weight-medium">$150</h6>
+                            <h6 class="font-weight-medium" id="cartSubtotal">$0.00</h6>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h6 class="font-weight-medium">Shipping</h6>
-                            <h6 class="font-weight-medium">$10</h6>
+                            <h6 class="font-weight-medium" id="cartShipping">$10.00</h6>
                         </div>
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
                         <div class="d-flex justify-content-between mt-2">
                             <h5 class="font-weight-bold">Total</h5>
-                            <h5 class="font-weight-bold">$160</h5>
+                            <h5 class="font-weight-bold" id="cartTotal">$10.00</h5>
                         </div>
-                        <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
+                        <button class="btn btn-block btn-primary my-3 py-3" id="checkoutBtn">Proceed To Checkout</button>
                     </div>
                 </div>
             </div>
@@ -240,87 +240,3 @@
 
 <script src="js/main.js"></script>
 
-<script>
-    // Function to load the cart from localStorage
-    function loadCart() {
-        // Get the cart from localStorage or initialize an empty array
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        // Get the table body to append the cart items
-        const cartTableBody = document.querySelector("tbody");
-
-        // Clear any existing content in the table
-        cartTableBody.innerHTML = '';
-
-        let total = 0;
-
-        // Loop through the cart and create table rows dynamically
-        cart.forEach((item, index) => {
-            const row = document.createElement('tr');
-
-            row.innerHTML = `
-                <td class="align-middle">
-                    <img src="img/product-1.jpg" alt="" style="width: 50px;"> ${item.name}<br>
-                </td>
-                <td class="align-middle">$${item.price}</td>
-                <td class="align-middle">
-                    <div class="input-group quantity mx-auto" style="width: 100px;">
-                        <div class="input-group-btn">
-                            <button class="btn btn-sm btn-primary btn-minus" onclick="updateQuantity(${index}, -1)">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                        </div>
-                        <input type="text" class="form-control form-control-sm bg-secondary text-center" value="${item.quantity}">
-                        <div class="input-group-btn">
-                            <button class="btn btn-sm btn-primary btn-plus" onclick="updateQuantity(${index}, 1)">
-                                <i class="fa fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                </td>
-                <td class="align-middle">${item.color}</td>
-                <td class="align-middle">${item.size}</td>
-                <td class="align-middle">$${(item.price * item.quantity).toFixed(2)}</td>
-                <td class="align-middle"><button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})"><i class="fa fa-times"></i></button></td>
-            `;
-            cartTableBody.appendChild(row);
-
-            // Update the total amount
-            total += item.price * item.quantity;
-        });
-
-        // Update the total price displayed on the page
-        document.getElementById('cartTotal').textContent = `Total: $${total.toFixed(2)}`;
-    }
-
-
-    // Function to update quantity of a product in the cart
-    function updateQuantity(index, change) {
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        cart[index].quantity += change;
-
-        if (cart[index].quantity <= 0) {
-            cart[index].quantity = 1; // Prevent negative or zero quantity
-        }
-
-        localStorage.setItem('cart', JSON.stringify(cart));
-        loadCart(); // Reload the cart to reflect changes
-    }
-
-    // Function to remove product from the cart
-    function removeFromCart(index) {
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        cart.splice(index, 1); // Remove the product at the given index
-
-        localStorage.setItem('cart', JSON.stringify(cart));
-        loadCart(); // Reload the cart to reflect changes
-    }
-
-    // Call the function to load the cart when the page loads
-    document.addEventListener('DOMContentLoaded', loadCart);
-
-    // Proceed to checkout button functionality (for now, it's just an alert)
-    document.getElementById('checkoutBtn').addEventListener('click', function() {
-        alert("Proceeding to Checkout...");
-    });
-</script>

@@ -81,9 +81,9 @@
                     <i class="fas fa-heart text-primary"></i>
                     <span class="badge">0</span>
                 </a>
-                <a href="" class="btn border">
+                <a href="cart.html" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
+                    <span id="cart-count" class="badge">0</span>
                 </a>
             </div>
         </div>
@@ -466,34 +466,3 @@
 
 </html>
 
-<script>
-    // Function to add product to cart
-function addToCart() {
-    const product = {
-        name: "Colorful Stylish Shirt", // Replace with dynamic product name
-        price: 150.00, // Replace with dynamic price
-        quantity: parseInt(document.querySelector(".quantity input").value),
-        size: document.querySelector("input[name='size']:checked")?.nextElementSibling.textContent,
-        color: document.querySelector("input[name='color']:checked")?.nextElementSibling.textContent
-    };
-
-    // Get existing cart from localStorage or initialize an empty array
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    // Check if the product is already in the cart
-    const existingProductIndex = cart.findIndex(item => item.name === product.name && item.size === product.size && item.color === product.color);
-
-    if (existingProductIndex > -1) {
-        // Update quantity if the product is already in the cart
-        cart[existingProductIndex].quantity += product.quantity;
-    } else {
-        // Add new product to the cart
-        cart.push(product);
-    }
-
-    // Save updated cart to localStorage
-    localStorage.setItem('cart', JSON.stringify(cart));
-    alert("Product added to cart!");
-}
-
-</script>
