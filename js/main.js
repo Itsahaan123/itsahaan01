@@ -109,3 +109,45 @@
 })(jQuery);
 
 
+function addToCart() {
+    const product = {
+        name: "Colorful Stylish Shirt", // Replace with dynamic product name
+        price: 150.00, // Replace with dynamic price
+        quantity: parseInt(document.querySelector(".quantity input").value),
+        size: document.querySelector("input[name='size']:checked")?.nextElementSibling.textContent,
+        color: document.querySelector("input[name='color']:checked")?.nextElementSibling.textContent
+    };
+
+    // Get existing cart from localStorage or initialize an empty array
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Check if the product is already in the cart
+    const existingProductIndex = cart.findIndex(item => item.name === product.name && item.size === product.size && item.color === product.color);
+
+    if (existingProductIndex > -1) {
+        // Update quantity if the product is already in the cart
+        cart[existingProductIndex].quantity += product.quantity;
+    } else {
+        // Add new product to the cart
+        cart.push(product);
+    }
+
+    // Save updated cart to localStorage
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    // Update cart count badge
+    updateCartCount();
+
+    alert("Product added to cart!");
+}
+// cart.js
+
+// Function to update cart count badge
+function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartCount = cart.reduce((total, product) => total + product.quantity, 0);
+    document.getElementById('cart-count').textContent = cartCount;
+}
+
+// Call updateCartCount on page load to initialize the cart count
+document.addEventListener('DOMContentLoaded', updateCartCount);
